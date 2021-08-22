@@ -1,24 +1,62 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Sidebar from "./sidebar";
+import TopHeader from "./topheader";
+import Dashboard from "./dashboard";
+import Users from "./users";
+import CreateUser from "./createuser";
+import EditUser from "./edituser";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { UserProvider } from "./userContext";
+import { ProdProvider } from "./productContext";
+import EditProd from "./editProd";
+import CreateProd from "./createProd";
+import Products from "./product";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div id="wrapper">
+        <Sidebar></Sidebar>
+        <div id="content-wrapper" class="d-flex flex-column">
+          <div id="content">
+            <TopHeader></TopHeader>
+            <div class="container-fluid">
+              <Switch>
+                <Route path="/" component={Dashboard} exact={true} />
+
+                <UserProvider>
+                  <Route path="/user" component={Users} exact={true} />
+                  <Route
+                    path="/create-user"
+                    component={CreateUser}
+                    exact={true}
+                  />
+                  <Route
+                    path="/user/edit/:id"
+                    component={EditUser}
+                    exact={true}
+                  />
+                  <ProdProvider>
+                  <Route path="/prod" component={Products} exact={true} />
+                  <Route
+                    path="/create-prod"
+                    component={CreateProd}
+                    exact={true}
+                  />
+                  <Route
+                    path="/prod/edit/:id"
+                    component={EditProd}
+                    exact={true}
+                  />
+                </ProdProvider>
+                </UserProvider>
+                
+              </Switch>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Router>
   );
 }
 
